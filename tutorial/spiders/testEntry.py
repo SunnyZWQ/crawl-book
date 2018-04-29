@@ -12,8 +12,9 @@ class doubanSpider(scrapy.Spider):
 
     def parse(self, response):
         #reload(sys)
-        sys.setdefaultencoding('utf-8')
-        a = response.xpath('//*[@id="info"]/a[1]').extract().strip().replace('<*>','')
-        with open('entry.txt','w') as f:
+        #sys.setdefaultencoding('utf-8')
+        #a = response.xpath('//*[@id="info"]/a[1]').extract().strip().replace('<*>','')
+        a = response.xpath('//*[@id="info"]/a[1]').extract()[0].strip().replace('\n','')
+	with open('entry.txt','w') as f:
             f.write(a)
 
