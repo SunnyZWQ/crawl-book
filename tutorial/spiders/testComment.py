@@ -21,7 +21,7 @@ class doubanSpider(scrapy.Spider):
 
 
     def rank(level):
-        if level=='力荐'
+        if level is '力荐'
             return 5
         if level=='推荐'
             return 4
