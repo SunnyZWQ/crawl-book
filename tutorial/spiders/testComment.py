@@ -26,11 +26,12 @@ class doubanSpider(scrapy.Spider):
             if level=='很差':
                 return '1'
 
+        book = response.xpath('//*[@id="content"]/div/div[2]/div/p[2]/a/text()').extract()[0]
         user = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/a/text()').extract()[0]
         rate = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/span/@title').extract()[0]
         rate = str(rank(rate))
         with open('comment.txt','w') as f:
-            f.write(str(user) + '  ' + rate)
+            f.write(book + '  ' + str(user) + '  ' + rate)
 
 
         
