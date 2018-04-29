@@ -13,12 +13,6 @@ class doubanSpider(scrapy.Spider):
     def parse(self, response):
         # reload(sys)
         # sys.setdefaultencoding('utf-8')
-        user = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/a/text()').extract()[0]
-        rate = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/span/@title').extract()[0]
-        rate = str(rank(rate))
-        with open('comment.txt','w') as f:
-            f.write(user + '  ' + rank(rate) + '  ')
-
 
         def rank(level):
             if level=='力荐':
@@ -31,4 +25,13 @@ class doubanSpider(scrapy.Spider):
                 return 2
             if level=='很差':
                 return 1
+
+        user = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/a/text()').extract()[0]
+        rate = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/span/@title').extract()[0]
+        rate = str(rank(rate))
+        with open('comment.txt','w') as f:
+            f.write(user + '  ' + rank(rate) + '  ')
+
+
+        
         
