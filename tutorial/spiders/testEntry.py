@@ -14,10 +14,10 @@ class doubanSpider(scrapy.Spider):
         #reload(sys)
         #sys.setdefaultencoding('utf-8')
         #a = response.xpath('//*[@id="info"]/a[1]').extract().strip().replace('<*>','')
-<<<<<<< HEAD
-        a = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','')
-=======
-        a = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
->>>>>>> a755156641813f69657189a1e2bf6a359959e130
+        author = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
+        public = response.xpath('//*[@id="info"]/text()[2]').extract()[0].strip().replace('\n','').replace(' ','')
         with open('entry.txt','w') as f:
-            f.write(a)
+            f.write(author + '  ' + public)
+
+
+
