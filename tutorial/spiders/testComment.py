@@ -16,4 +16,4 @@ class doubanSpider(scrapy.Spider):
         comment = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]').extract()
 
         with open('comment.txt','w') as f:
-            f.write(comment)
+            f.write(str(comment))
