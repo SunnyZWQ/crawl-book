@@ -13,7 +13,7 @@ class doubanSpider(scrapy.Spider):
     def parse(self, response):
         # reload(sys)
         # sys.setdefaultencoding('utf-8')
-        user = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/a/text()').extract()
+        user = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/a/text()').extract()[0]
         rate = response.xpath('//*[@id="comments"]/ul/li[1]/div[2]/h3/span[2]/span/@title').extract()[0]
 
         with open('comment.txt','w') as f:
