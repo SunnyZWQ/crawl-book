@@ -17,4 +17,3 @@ class doubanSpider(scrapy.Spider):
         a = response.xpath('//*[@id="info"]/a[1]').extract()[0].strip().replace('\n','')
 	    with open('entry.txt','w') as f:
             f.write(a)
-
