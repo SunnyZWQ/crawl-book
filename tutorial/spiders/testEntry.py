@@ -14,6 +14,6 @@ class doubanSpider(scrapy.Spider):
         #reload(sys)
         #sys.setdefaultencoding('utf-8')
         #a = response.xpath('//*[@id="info"]/a[1]').extract().strip().replace('<*>','')
-        a = response.xpath('//*[@id="info"]/a[1]').extract()[0].strip().replace('\n','')
+        a = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
         with open('entry.txt','w') as f:
             f.write(a)
