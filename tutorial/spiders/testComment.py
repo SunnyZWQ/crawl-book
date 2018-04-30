@@ -30,7 +30,7 @@ class doubanSpider(scrapy.Spider):
         comments = response.xpath('//*[@id="comments"]/ul/li')
         for item in comments:
             user = item.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
-            rate = item.xpath('.//div[2]/h3/span[2]/span/@title').extract()[0]
+            rate = item.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
             date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
             rate = str(rank(rate))
             with open('comment.txt','w') as f:
@@ -41,7 +41,6 @@ class doubanSpider(scrapy.Spider):
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page, callback=self.parse)
-
 
 
 
