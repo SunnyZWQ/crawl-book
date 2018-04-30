@@ -1,13 +1,7 @@
 #-*- coding: UTF-8 -*-
 
-
-import scrapy
-
-
 import scrapy
 import sys
-
-
 
 class doubanSpider(scrapy.Spider):
     name = 'tagLink'
