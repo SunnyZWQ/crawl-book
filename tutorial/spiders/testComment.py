@@ -31,7 +31,7 @@ class doubanSpider(scrapy.Spider):
         for item in comments:
             user = item.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
             rate = item.xpath('.//div[2]/h3/span[2]/span/@title').extract()[0]
-            date = item.xpath('.//div[2]/h3/span[2]/span[2]').extract()[0]
+            date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
             rate = str(rank(rate))
             with open('comment.txt','w') as f:
                 f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date)
