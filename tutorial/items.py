@@ -12,3 +12,9 @@ class TutorialItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class Comment(scrapy.Item):
+    book = scrapy.Field()
+    user = scrapy.Field()
+    rate = scrapy.Field()
+    date = scrapy.Field()

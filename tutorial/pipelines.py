@@ -9,3 +9,22 @@
 class TutorialPipeline(object):
     def process_item(self, item, spider):
         return item
+
+
+class TxtPipeline(object):
+    
+    """生成txt文件!"""
+    
+    def open_spider(self, spider):
+        self.f = open('./comment.txt', 'w')
+    
+    def process_item(self, item, spider):
+        #content = json.dumps(dict(item), ensure_ascii=False) + ',\n'
+        #self.f.write(content.encode("utf-8"))  #python2
+        content = str(item[book]) + '\t' + str(item[user]) + '\t' + str(item[rate]) + '\t' + str(item[date]) + '\n'
+        self.f.write(content)  #python3
+        return item
+    
+    def close_spider(self, spider):
+        self.f.close()
+
