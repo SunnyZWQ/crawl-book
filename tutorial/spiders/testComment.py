@@ -29,6 +29,7 @@ class doubanSpider(scrapy.Spider):
         book = response.xpath('//*[@id="content"]/div/div[2]/div/p[2]/a/text()').extract()[0]
         comments = response.xpath('//*[@id="comments"]/ul/li')
         i = 1
+        page = 1
         while(i < 21):
         # for item in comments:
             user = comments[i].xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
@@ -36,8 +37,9 @@ class doubanSpider(scrapy.Spider):
             date = comments[i].xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
             rate = str(rank(rate))
             with open('comment.txt','w') as f:
-                f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
+                f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n' + page)
             i = i + 1
+            page = page + 1
 
         next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
         next_page = self.start_urls[0] + next_page
