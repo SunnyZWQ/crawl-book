@@ -11,7 +11,7 @@ class TutorialPipeline(object):
         return item
 
 
-class TxtPipeline(object):
+class CommentTxtPipeline(object):
     
     """生成txt文件!"""
     

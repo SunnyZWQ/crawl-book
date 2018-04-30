@@ -8,7 +8,8 @@ class doubanSpider(scrapy.Spider):
     name = 'testComment'
 
     start_urls = [
-        'https://book.douban.com/subject/25862578/comments/'
+        'https://book.douban.com/subject/25862578/comments/',
+        'https://book.douban.com/subject/25862578/comments/hot?p=2'
     ]
 
     def parse(self, response):
@@ -41,7 +42,12 @@ class doubanSpider(scrapy.Spider):
                     continue
                 date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
                 rate = str(rank(rate))
-                f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
+                # f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
+                comment['book'] = book
+                comment['user'] = str(user)
+                comment['rate'] = rate
+                comment['date'] = date
+                yield comment
 
             next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
             next_page = self.start_urls[0] + next_page
