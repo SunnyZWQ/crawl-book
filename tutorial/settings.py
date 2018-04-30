@@ -104,6 +104,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    'tutorial.pipelines.TutorialPipeline': 300,
    'tutorial.pipelines.CommentPipeline': 200,
+   'tutorial.pipelines.BookPipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

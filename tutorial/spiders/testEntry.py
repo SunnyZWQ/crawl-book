@@ -1,6 +1,6 @@
 import scrapy
 import sys
-#from my.items import MyscrapyItem,bookLink,book
+from tutorial.items import Book
 
 
 class doubanSpider(scrapy.Spider):
@@ -11,23 +11,22 @@ class doubanSpider(scrapy.Spider):
         'https://book.douban.com/subject/25862578/'
     ]
 
-    def parse(self, response):
-        # reload(sys)
-        # sys.setdefaultencoding('utf-8')
-        author = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
-        public = response.xpath('//*[@id="info"]/text()[5]').extract()[0].replace(' ','')
-        origin_name = response.xpath('//*[@id="info"]/text()[7]').extract()[0].replace(' ','')
-        public_year = response.xpath('//*[@id="info"]/text()[10]').extract()[0].replace(' ','')
-        pages = response.xpath('//*[@id="info"]/text()[12]').extract()[0].replace(' ','')
-        price = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
-        book_type = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
-        isbn =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
+    def parse_entry(self, response):
 
-        with open('entry.txt','w') as f:
-            f.write(author + '  ' + public + '  ' + origin_name + '  ' + public_year \
-                    + '  ' + pages + '  ' + price + '  ' + book_type + '  ' + isbn)
+        book = Book()
 
+        book['name'] = response.xpath('//*[@id="wrapper"]/h1/span')
+        book['author'] = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
+        book['public'] = response.xpath('//*[@id="info"]/text()[5]').extract()[0].replace(' ','')
+        book['origin_name'] = response.xpath('//*[@id="info"]/text()[7]').extract()[0].replace(' ','')
+        book['public_year'] = response.xpath('//*[@id="info"]/text()[10]').extract()[0].replace(' ','')
+        book['pages'] = response.xpath('//*[@id="info"]/text()[12]').extract()[0].replace(' ','')
+        book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
+        book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
+        book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
+        book['comment_link'] = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
 
-
-
+        yield book
+        comment_link = response.urljoin(book['comment_link'])
+        yield scrapy.Request(comment_link, callback=self.parse_comment)
 
