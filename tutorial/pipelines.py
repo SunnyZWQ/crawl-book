@@ -21,7 +21,7 @@ class CommentPipeline(object):
     def process_item(self, Comment, spider):
         #content = json.dumps(dict(item), ensure_ascii=False) + ',\n'
         #self.f.write(content.encode("utf-8"))  #python2
-        content = str(item[book]) + '\t' + str(item[user]) + '\t' + str(item[rate]) + '\t' + str(item[date]) + '\n'
+        content = str(Comment[book]) + '\t' + str(Comment[user]) + '\t' + str(Comment[rate]) + '\t' + str(Comment[date]) + '\n'
         self.f.write(content)  #python3
         return Comment
     
