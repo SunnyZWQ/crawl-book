@@ -14,8 +14,6 @@ class doubanSpider(scrapy.Spider):
     start_urls = ['https://book.douban.com/tag/?view=type&icn=index-sorttags-hot#%E6%96%87%E5%AD%A6']
 
     def parse(self, response):
-        reload(sys)
-        sys.setdefaultencoding('utf-8')
         lista = response.css('table.tagCol a::attr(href)')
         print('list' + str(lista))
         with open('link.txt', 'w') as f:
