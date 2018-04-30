@@ -36,8 +36,8 @@ class doubanSpider(scrapy.Spider):
             rate = comments[i].xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
             date = comments[i].xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
             rate = str(rank(rate))
-            with open('comment.txt','w') as f:
-                f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n' + str(page))
+            with open('comment.txt','a') as f:
+                f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '  ' + str(page) + '\n')
             i = i + 1
             page = page + 1
 
