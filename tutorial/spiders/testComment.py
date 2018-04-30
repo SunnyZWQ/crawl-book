@@ -43,5 +43,3 @@ class doubanSpider(scrapy.Spider):
             yield scrapy.Request(next_page, callback=self.parse)
 
 
-
-
