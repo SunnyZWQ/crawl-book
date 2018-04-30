@@ -87,10 +87,10 @@ COOKIES_ENABLED = False
 
 DOWNLOADER_MIDDLEWARES = {
 #    'cnblogs.middlewares.MyCustomDownloaderMiddleware': 543,
-    'cnblogs.middlewares.RandomUserAgent': 1,
+    #'cnblogs.middlewares.RandomUserAgent': 1,
     #'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
-    'cnblogs.middlewares.ProxyMiddleware': 100,
+    #'cnblogs.middlewares.ProxyMiddleware': 100,
 }
 
 # Enable or disable extensions
