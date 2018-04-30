@@ -36,7 +36,7 @@ class doubanSpider(scrapy.Spider):
                 try:
                     rate = item.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
                 except Exception:
-                    rate = ''
+                    continue
                 date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
                 rate = str(rank(rate))
                 f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
