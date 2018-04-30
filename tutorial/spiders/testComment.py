@@ -35,7 +35,7 @@ class doubanSpider(scrapy.Spider):
                 user = item.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
                 try:
                     rate = item.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
-                except ValueError:
+                except Exception:
                     rate = ''
                 date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
                 rate = str(rank(rate))
@@ -45,6 +45,8 @@ class doubanSpider(scrapy.Spider):
             next_page = self.start_urls[0] + next_page
             if next_page is not None:
                 next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse)
+                yield scrapy.Request(next_page, callback=self.parse_wf)
+
+
 
 
