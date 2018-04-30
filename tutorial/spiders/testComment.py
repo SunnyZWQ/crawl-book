@@ -31,14 +31,15 @@ class doubanSpider(scrapy.Spider):
         i = 1
         page = 1
         with open('comment.txt','w') as f:
-            while(i < 20):
-            # for item in comments:
-                user = comments[i].xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
-                rate = comments[i].xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
-                date = comments[i].xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
+            for item in comments:
+                user = item.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
+                try:
+                    rate = item.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
+                except ValueError:
+                    rate = ''
+                date = item.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
                 rate = str(rank(rate))
                 f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
-                i = i + 1
 
             next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
             next_page = self.start_urls[0] + next_page
