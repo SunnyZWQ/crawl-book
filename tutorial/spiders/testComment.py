@@ -45,7 +45,7 @@ class doubanSpider(scrapy.Spider):
             next_page = self.start_urls[0] + next_page
             if next_page is not None:
                 next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse_wf)
+                yield scrapy.Request(next_page, callback=self.parse)
 
 
 
