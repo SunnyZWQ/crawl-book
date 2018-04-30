@@ -30,7 +30,7 @@ class doubanSpider(scrapy.Spider):
         comments = response.xpath('//*[@id="comments"]/ul/li')
         i = 1
         page = 1
-        while(i < 21):
+        while(i < 20):
         # for item in comments:
             user = comments[i].xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
             rate = comments[i].xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
