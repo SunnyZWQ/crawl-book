@@ -3,7 +3,7 @@ import sys
 
 
 class doubanSpider(scrapy.Spider):
-    name = 'tagLink'
+    name = 'testBookName'
     start_urls = ['https://book.douban.com/tag/?view=type&icn=index-sorttags-hot#%E6%96%87%E5%AD%A6']
 
     def parse(self, response):
