@@ -29,7 +29,7 @@ class doubanSpider(scrapy.Spider):
         book = response.xpath('//*[@id="content"]/div/div[2]/div/p[2]/a/text()').extract()[0]
         comments = response.xpath('//*[@id="comments"]/ul/li')
         i = 1
-        while(comments[i] is not None):
+        while(i < 21):
         # for item in comments:
             user = comments[i].xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
             rate = comments[i].xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
