@@ -103,7 +103,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'tutorial.pipelines.TutorialPipeline': 300,
-   'tutorial.pipelines.CommentTxtPipeline': 200,
+   'tutorial.pipelines.CommentPipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
