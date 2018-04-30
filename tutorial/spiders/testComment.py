@@ -40,10 +40,10 @@ class doubanSpider(scrapy.Spider):
                 f.write(book + '  ' + str(user) + '  ' + rate + '  ' + date + '\n')
                 i = i + 1
 
-        next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
-        next_page = self.start_urls[0] + next_page
-        if next_page is not None:
-            next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse)
+            next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
+            next_page = self.start_urls[0] + next_page
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse)
 
 
