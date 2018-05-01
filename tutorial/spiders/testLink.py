@@ -50,19 +50,21 @@ class doubanSpider(scrapy.Spider):
 
         #book = Book()
 
-        book['tag'] = response.xpath('').extract()[0]
-        book['name'] = response.xpath('//*[@id="wrapper"]/h1/span')
-        book['author'] = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
-        book['public'] = response.xpath('//*[@id="info"]/text()[5]').extract()[0].replace(' ','')
-        book['origin_name'] = response.xpath('//*[@id="info"]/text()[7]').extract()[0].replace(' ','')
-        book['public_year'] = response.xpath('//*[@id="info"]/text()[10]').extract()[0].replace(' ','')
-        book['pages'] = response.xpath('//*[@id="info"]/text()[12]').extract()[0].replace(' ','')
-        book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
-        book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
-        book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
-        book['comment_link'] = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
+        # book['tag'] = response.xpath('').extract()[0]
+        # book['name'] = response.xpath('//*[@id="wrapper"]/h1/span')
+        # book['author'] = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
+        # book['public'] = response.xpath('//*[@id="info"]/text()[5]').extract()[0].replace(' ','')
+        # book['origin_name'] = response.xpath('//*[@id="info"]/text()[7]').extract()[0].replace(' ','')
+        # book['public_year'] = response.xpath('//*[@id="info"]/text()[10]').extract()[0].replace(' ','')
+        # book['pages'] = response.xpath('//*[@id="info"]/text()[12]').extract()[0].replace(' ','')
+        # book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
+        # book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
+        # book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
+        # book['comment_link'] = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
 
-        yield self.book
+        # yield self.book
+
+        
         comment_link = response.urljoin(book['comment_link'])
         # entry --> comment
         yield scrapy.Request(comment_link, callback=self.parse_comment)
