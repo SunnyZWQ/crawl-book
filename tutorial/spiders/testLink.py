@@ -27,7 +27,7 @@ class doubanSpider(scrapy.Spider):
         comment = Comment()
         booklist = response.xpath('//*[@id="subject_list"]/ul/li')
         for i in booklist:
-            link = i.xpath('.//div[2]/h2/a').extract()[0]
+            link = i.xpath('.//div[2]/h2/a/@href').extract()[0]
             link = response.urljoin(link)
             # booklist --> entry
             yield scrapy.Request(link, callback=self.parse_entry)
