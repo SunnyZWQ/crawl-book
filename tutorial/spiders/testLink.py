@@ -11,10 +11,11 @@ class doubanSpider(scrapy.Spider):
 
     name = 'tagLink'
     start_urls = ['https://book.douban.com/tag/?view=type&icn=index-sorttags-hot']
+    book = Book()
 
     def parse(self, response):
         lista = response.css('table.tagCol a::attr(href)')
-        Book['tag'] = response.xpath('//*[@id="content"]/div/div[1]/div[2]/div[1]/table/tbody/tr[1]/td[1]/a/text()').extract()[0]
+        book['tag'] = response.xpath('//*[@id="content"]/div/div[1]/div[2]/div[1]/table/tbody/tr[1]/td[1]/a/text()').extract()[0]
         for href in response.css('table.tagCol a::attr(href)').extract():
             href = 'https://book.douban.com' + str(href)
             # link --> booklist
@@ -39,7 +40,7 @@ class doubanSpider(scrapy.Spider):
     
     def parse_entry(self, response):
 
-        book = Book()
+        #book = Book()
 
         book['name'] = response.xpath('//*[@id="wrapper"]/h1/span')
         book['author'] = response.xpath('//*[@id="info"]/a[1]/text()').extract()[0].strip().replace('\n','').replace(' ','')
