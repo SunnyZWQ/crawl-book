@@ -48,7 +48,7 @@ class doubanSpider(scrapy.Spider):
     
     def parse_entry(self, response):
 
-        #book = Book()
+        book = Book()
 
         # book['tag'] = response.xpath('').extract()[0]
         # book['name'] = response.xpath('//*[@id="wrapper"]/h1/span')
@@ -60,11 +60,11 @@ class doubanSpider(scrapy.Spider):
         # book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
         # book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
         # book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
-        # book['comment_link'] = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
+        book['comment_link'] = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
 
         # yield self.book
 
-        
+
         comment_link = response.urljoin(book['comment_link'])
         # entry --> comment
         yield scrapy.Request(comment_link, callback=self.parse_comment)
