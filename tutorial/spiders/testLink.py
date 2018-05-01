@@ -34,12 +34,17 @@ class doubanSpider(scrapy.Spider):
         
         try:
             next_page = response.xpath('//*[@id="subject_list"]/div[2]/span[4]/a/@href').extract()[0]
+            next_page = 'https://book.douban.com' + next_page
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse_list)
         except Exception:
             response.xpath('//*[@id="subject_list"]/div[2]/span[3]/a/@href').extract()[0]
-        next_page = 'https://book.douban.com' + next_page
-        if next_page is not None:
-            next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse_list)
+            next_page = 'https://book.douban.com' + next_page
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse_list)
+        
 
     
     def parse_entry(self, response):
