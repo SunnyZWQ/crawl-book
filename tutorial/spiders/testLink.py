@@ -43,9 +43,13 @@ class doubanSpider(scrapy.Spider):
             if next_page is not None:
                 next_page = response.urljoin(next_page)
                 yield scrapy.Request(next_page, callback=self.parse_list)
-        
+        except Exception:
+            next_page = response.xpath('//*[@id="subject_list"]/div[2]/span[5]/a/@href').extract()[0]
+            next_page = 'https://book.douban.com' + next_page
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse_list)
 
-    
     def parse_entry(self, response):
 
         # book = Book()
@@ -60,7 +64,7 @@ class doubanSpider(scrapy.Spider):
         # book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
         # book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
         # book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
-        comment_link = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract[0]
+        comment_link = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract()[0]
 
         # yield self.book
 
