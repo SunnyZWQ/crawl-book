@@ -12,7 +12,7 @@ class doubanSpider(scrapy.Spider):
         'https://book.douban.com/subject/25862578/comments/hot?p=2'
     ]
 
-    def parse(self, response):
+    def parse_comment(self, response):
         # reload(sys)
         # sys.setdefaultencoding('utf-8')
 

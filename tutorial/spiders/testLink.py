@@ -32,7 +32,10 @@ class doubanSpider(scrapy.Spider):
             # booklist --> entry
             yield scrapy.Request(link, callback=self.parse_entry)
         
-        next_page = response.xpath('//*[@id="subject_list"]/div[2]/span[4]/a/@href').extract()[0]
+        try:
+            next_page = response.xpath('//*[@id="subject_list"]/div[2]/span[4]/a/@href').extract()[0]
+        except Exception:
+            response.xpath('//*[@id="subject_list"]/div[2]/span[3]/a/@href').extract()[0]
         next_page = 'https://book.douban.com' + next_page
         if next_page is not None:
             next_page = response.urljoin(next_page)
@@ -58,3 +61,43 @@ class doubanSpider(scrapy.Spider):
         comment_link = response.urljoin(self.book['comment_link'])
         # entry --> comment
         yield scrapy.Request(comment_link, callback=self.parse_comment)
+    
+    def parse_comment(self, response):
+        # reload(sys)
+        # sys.setdefaultencoding('utf-8')
+
+        def rank(level):
+            if level=='力荐':
+                return '5'
+            if level=='推荐':
+                return '4'
+            if level=='还行':
+                return '3'
+            if level=='较差':
+                return '2'
+            if level=='很差':
+                return '1'
+
+        comment = Comment()
+        book = response.xpath('//*[@id="content"]/div/div[2]/div/p[2]/a/text()').extract()[0]
+        comments = response.xpath('//*[@id="comments"]/ul/li')
+        with open('comment.txt','w') as f:
+            for i in comments:
+                user = i.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
+                try:
+                    rate = i.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
+                except Exception:
+                    continue
+                date = i.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
+                rate = str(rank(rate))
+                comment['book'] = book
+                comment['user'] = str(user)
+                comment['rate'] = rate
+                comment['date'] = date
+                yield comment
+
+            next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
+            next_page = self.start_urls[0] + next_page
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse_comment)
