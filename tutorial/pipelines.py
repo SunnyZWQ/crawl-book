@@ -16,7 +16,7 @@ class CommentPipeline(object):
     """生成txt文件!"""
     
     def open_spider(self, spider):
-        self.f = open('data/comment.txt', 'w')
+        self.f = open('data/comment.txt', 'a')
     
     def process_item(self, Comment, spider):
         content = str(Comment['book']) + '\t' + str(Comment['user']) + '\t' + str(Comment['rate']) + '\t' + str(Comment['date']) + '\n'
@@ -32,7 +32,7 @@ class BookPipeline(object):
     """生成txt文件!"""
     
     def open_spider(self, spider):
-        self.f = open('data/book.txt', 'w')
+        self.f = open('data/book.txt', 'a')
     
     def process_item(self, Book, spider):
         content = str(Book['name']) + '\t' \
