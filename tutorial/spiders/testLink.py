@@ -92,23 +92,22 @@ class doubanSpider(scrapy.Spider):
         comment = Comment()
         book = response.xpath('//*[@id="content"]/div/div[2]/div/p[2]/a/text()').extract()[0]
         comments = response.xpath('//*[@id="comments"]/ul/li')
-        with open('comment.txt','w') as f:
-            for i in comments:
-                user = i.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
-                try:
-                    rate = i.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
-                except Exception:
-                    continue
-                date = i.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
-                rate = str(rank(rate))
-                comment['book'] = book
-                comment['user'] = str(user)
-                comment['rate'] = rate
-                comment['date'] = date
-                yield comment
+        for i in comments:
+            user = i.xpath('.//div[2]/h3/span[2]/a/text()').extract()[0]
+            try:
+                rate = i.xpath('.//div[2]/h3/span[2]/span[1]/@title').extract()[0]
+            except Exception:
+                continue
+            date = i.xpath('.//div[2]/h3/span[2]/span[2]/text()').extract()[0]
+            rate = str(rank(rate))
+            comment['book'] = book
+            comment['user'] = str(user)
+            comment['rate'] = rate
+            comment['date'] = date
+            yield comment
 
-            next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
-            next_page = self.start_urls[0] + next_page
-            if next_page is not None:
-                next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse_comment)
+        next_page = response.xpath('//*[@id="content"]/div/div[1]/div/div[3]/ul/li[3]/a/@href').extract()[0]
+        next_page = self.start_urls[0] + next_page
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse_comment)
