@@ -35,17 +35,17 @@ class BookPipeline(object):
         self.f = open('data/book.txt', 'a')
     
     def process_item(self, Book, spider):
-        content = str(Book['name']) + '\t' \
-                 + str(Book['tag']) + '\t' \
-                 + str(Book['author'])  + '\t' \
-                 + str(Book['public']) + '\t' \
-                 + str(Book['origin_name']) + '\t' \
-                 + str(Book['public_year']) + '\t' \
-                 + str(Book['pages']) + '\t' \
-                 + str(Book['price']) + '\t' \
-                 + str(Book['book_type']) + '\t' \
-                 + str(Book['isbn']) + '\n'
-        self.f.write(content)
+        # content = str(Book['name']) + '\t' \
+        #          + str(Book['tag']) + '\t' \
+        #          + str(Book['author'])  + '\t' \
+        #          + str(Book['public']) + '\t' \
+        #          + str(Book['origin_name']) + '\t' \
+        #          + str(Book['public_year']) + '\t' \
+        #          + str(Book['pages']) + '\t' \
+        #          + str(Book['price']) + '\t' \
+        #          + str(Book['book_type']) + '\t' \
+        #          + str(Book['isbn']) + '\n'
+        # self.f.write(content)
         return Book
     
     def close_spider(self, spider):

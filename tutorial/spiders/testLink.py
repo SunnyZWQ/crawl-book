@@ -64,8 +64,10 @@ class doubanSpider(scrapy.Spider):
         # book['price'] = response.xpath('//*[@id="info"]/text()[14]').extract()[0].replace(' ','')
         # book['book_type'] = response.xpath('//*[@id="info"]/text()[16]').extract()[0].replace(' ','')
         # book['isbn'] =  response.xpath('//*[@id="info"]/text()[20]').extract()[0].replace(' ','')
+        
         comment_link = response.xpath('//*[@id="content"]/div/div[1]/div[3]/div[11]/h2/span[2]/a/@href').extract()[0]
 
+        #//*[@id="content"]/div/div[1]/div[3]/div[4]/h2/span[2]/a
         # yield self.book
 
 
