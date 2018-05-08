@@ -136,7 +136,7 @@ class doubanSpider(scrapy.Spider):
             userrank = rank(userrank)
             username = comment.css('h3 span a::text').extract()[1]
 
-            with open('data/my_comment.txt') as f:
+            with open('data/my_comment.txt','a') as f:
                 f.write(bookname + '    ' \
                         + username + '    ' \
                         + userrank + '    ' \
