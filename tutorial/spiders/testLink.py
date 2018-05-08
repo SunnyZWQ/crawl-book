@@ -15,11 +15,17 @@ class doubanSpider(scrapy.Spider):
 
     def parse(self, response):
         lista = response.css('table.tagCol a::attr(href)')
+        
         #self.book['tag'] = response.xpath('//*[@id="content"]/div/div[1]/div[2]/div[1]/table/tbody/tr[1]/td[1]/a/text()').extract()[0]
-        for href in response.css('table.tagCol a::attr(href)').extract():
-            href = 'https://book.douban.com' + str(href)
-            # link --> booklist
-            yield scrapy.Request(href, callback=self.parse_list)
+        with open('data/my_taglink.txt', 'a') as f:
+            for href in response.css('table.tagCol a::attr(href)').extract():
+                href = 'https://book.douban.com' + str(href)
+                f.write(href + '\n')
+        
+        # for href in response.css('table.tagCol a::attr(href)').extract():
+        #     href = 'https://book.douban.com' + str(href)
+        #     # link --> booklist
+        #     yield scrapy.Request(href, callback=self.parse_list)
 
     
     def parse_list(self, response):

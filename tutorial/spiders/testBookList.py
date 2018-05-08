@@ -13,17 +13,41 @@ class doubanSpider(scrapy.Spider):
     ]
 
     def parse_list(self, response):
-        comment = Comment()
-        booklist = response.xpath('//*[@id="subject_list"]/ul/li')
-        for i in booklist:
-            link = i.xpath('.//div[2]/h2/a').extract()[0]
-            link = response.urljoin(link)
-            # booklist --> entry
-            yield scrapy.Request(next_page, callback=self.parse_entry)
+
+        ###################### 如果下一页为空，则爬取下一个tag #########################
+        ###########################################################################
         
-        next_page = response.xpath('//*[@id="subject_list"]/div[2]/span[4]/a/@href').extract()[0]
-        next_page = 'https://book.douban.com' + next_page
-        if next_page is not None:
-            next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse_list)
+        ifbook = response.css('p.pl2::text')
+        if ifbook.extract()[0]=='没有找到符合条件的图书':
+            print('no more booklist!')
+        
+        ###########################################################################
+        ###########################################################################
+        
+        else:
+            booklist = response.css('li.subject-item')
+
+            for book in booklist:
+                booklink = book.css('h2 a::attr(href)').extract()[0]
+                bookname = book.css('h2 a::attr(title)').extract()[0]
+                bookinfo = book.css('div.pub::text').extract()[0].replace('\n','').strip()
+                img = book.css('img::attr(src)').extract()[0]
+                bookrate = book.css('span.rating_nums::text').extract()[0]
+                bookstar = book.css('div.star.clearfix span::attr(class)')[0].extract()
+                # booklist --> entry
+                yield scrapy.Request(next_page, callback=self.parse_entry)
+                with open('data/my_bookinfo.txt', 'a') as f:
+                    for link in booklink:
+                        f.write(bookname + '    ' \
+                                + booklink + '    ' \
+                                + bookinfo + '    ' \
+                                + img + '    ' \
+                                + bookrate + '    ' \
+                                + bookstar + '    ' \
+                                + '\n')
+        
+            next_page = response.css('span.next a::attr(href)').extract()[0]
+            if next_page is not None:
+                next_page = response.urljoin(next_page)
+                yield scrapy.Request(next_page, callback=self.parse_list)
 
