@@ -24,7 +24,9 @@ class doubanSpider(scrapy.Spider):
         for href in response.css('table.tagCol a::attr(href)').extract():
             href = response.urljoin(href)
             # link --> booklist
-            yield scrapy.Request(href, callback=self.parse_list)
+            yield scrapy.Request(href,meta = {
+                  'dont_redirect': True,
+                  'handle_httpstatus_list': [302]} ,callback=self.parse_list)
 
     
     def parse_list(self, response):
@@ -58,12 +60,16 @@ class doubanSpider(scrapy.Spider):
                             + bookstar + '    ' \
                             + '\n')
                 # booklist --> entry
-                yield scrapy.Request(next_page, callback=self.parse_entry)
+                yield scrapy.Request(booklink, meta = {
+                  'dont_redirect': True,
+                  'handle_httpstatus_list': [302]} , callback=self.parse_entry)
         
             next_page = response.css('span.next a::attr(href)').extract()[0]
             if next_page is not None:
                 next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse_list)
+                yield scrapy.Request(next_page, meta = {
+                  'dont_redirect': True,
+                  'handle_httpstatus_list': [302]} , callback=self.parse_list)
 
 
     def parse_entry(self, response):
@@ -99,7 +105,9 @@ class doubanSpider(scrapy.Spider):
 
         link = response.css('div.mod-hd h2 span.pl a::attr(href)').extract()[0]
         comment_link = response.urljoin(link)
-        yield scrapy.Request(comment_link, callback=self.parse_comment)
+        yield scrapy.Request(comment_link, meta = {
+                  'dont_redirect': True,
+                  'handle_httpstatus_list': [302]} , callback=self.parse_comment)
 
 
 
@@ -128,7 +136,7 @@ class doubanSpider(scrapy.Spider):
             userrank = rank(userrank)
             username = comment.css('h3 span a::text').extract()[1]
 
-            with open('data/mycomment.txt') as f:
+            with open('data/my_comment.txt') as f:
                 f.write(bookname + '    ' \
                         + username + '    ' \
                         + userrank + '    ' \
@@ -161,4 +169,6 @@ class doubanSpider(scrapy.Spider):
         next_page = response.css('a.page-btn::attr(href)').extract()[0]
         if next_page is not None:
             next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse_comment)
+            yield scrapy.Request(next_page, meta = {
+                  'dont_redirect': True,
+                  'handle_httpstatus_list': [302]} , callback=self.parse_comment)
