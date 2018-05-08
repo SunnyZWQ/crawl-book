@@ -30,7 +30,19 @@ class doubanSpider(scrapy.Spider):
 
 
         listcomment = response.css('div.comment')
-        name_rank = listcomment.css('h3 span a::text').extract()
+        bookname = response.css('p.pl2.side-bar-link a::text').extract()[1]
+
+        for comment in listcomment:
+            userrank = comment.css('span::attr(title)').extract()[0]
+            userrank = rank(userrank)
+            username = comment.css('h3 span a::text').extract()[1]
+
+            with open('data/mycomment.txt') as f:
+                f.write(bookname + '    ' \
+                        + username + '    ' \
+                        + userrank + '    ' \
+                        + '\n')
+        
         # name_rank：长度为40的list（下标0-39），(下标从1)奇数位为评分，偶数位为评论者
 
         # comment = Comment()

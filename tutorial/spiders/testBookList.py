@@ -34,17 +34,16 @@ class doubanSpider(scrapy.Spider):
                 img = book.css('img::attr(src)').extract()[0]
                 bookrate = book.css('span.rating_nums::text').extract()[0]
                 bookstar = book.css('div.star.clearfix span::attr(class)')[0].extract()
+                with open('data/my_bookinfo.txt', 'a') as f:
+                    f.write(bookname + '    ' \
+                            + booklink + '    ' \
+                            + bookinfo + '    ' \
+                            + img + '    ' \
+                            + bookrate + '    ' \
+                            + bookstar + '    ' \
+                            + '\n')
                 # booklist --> entry
                 yield scrapy.Request(next_page, callback=self.parse_entry)
-                with open('data/my_bookinfo.txt', 'a') as f:
-                    for link in booklink:
-                        f.write(bookname + '    ' \
-                                + booklink + '    ' \
-                                + bookinfo + '    ' \
-                                + img + '    ' \
-                                + bookrate + '    ' \
-                                + bookstar + '    ' \
-                                + '\n')
         
             next_page = response.css('span.next a::attr(href)').extract()[0]
             if next_page is not None:

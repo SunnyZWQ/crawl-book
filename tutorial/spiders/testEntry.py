@@ -13,17 +13,17 @@ class doubanSpider(scrapy.Spider):
 
     def parse_entry(self, response):
 
-        book = Book()
+        # book = Book()
 
         ############################## info from entry ############################
         ###########################################################################
         
-        title = response.css('div#info span.pl::text').extract()
-        for i in title:
-            i.replace(':','').replace('：','')
-        content = response.css('div#info::text').extract()
-        for i in content:
-            i.strip().replace('\n', '').replace
+        # title = response.css('div#info span.pl::text').extract()
+        # for i in title:
+        #     i.replace(':','').replace('：','')
+        # content = response.css('div#info::text').extract()
+        # for i in content:
+        #     i.strip().replace('\n', '').replace
         
         ###########################################################################
         ###########################################################################
