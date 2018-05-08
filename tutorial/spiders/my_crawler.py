@@ -60,9 +60,13 @@ class doubanSpider(scrapy.Spider):
                             + bookstar + '    ' \
                             + '\n')
                 # booklist --> entry
+<<<<<<< HEAD
                 yield scrapy.Request(booklink, meta = {
                   'dont_redirect': True,
                   'handle_httpstatus_list': [302]} , callback=self.parse_entry)
+=======
+                yield scrapy.Request(booklink, callback=self.parse_entry)
+>>>>>>> 724e7cdd66fa5d7a304ec63db045f6df05b55e8e
         
             next_page = response.css('span.next a::attr(href)').extract()[0]
             if next_page is not None:
