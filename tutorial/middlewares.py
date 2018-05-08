@@ -7,6 +7,14 @@
 
 from scrapy import signals
 
+import warnings
+from scrapy.exceptions import ScrapyDeprecationWarning
+warnings.warn("Module `scrapy.contrib.downloadermiddleware.redirect` is deprecated, "
+              "use `scrapy.downloadermiddlewares.redirect` instead",
+              ScrapyDeprecationWarning, stacklevel=2)
+
+from scrapy.downloadermiddlewares.redirect import *
+
 
 class TutorialSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,

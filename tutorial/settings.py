@@ -90,6 +90,9 @@ DOWNLOADER_MIDDLEWARES = {
     #'cnblogs.middlewares.RandomUserAgent': 1,
     #'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+    'street.middlewares.RandomUserAgentMiddleware': 400,
+    'street.middlewares.RedirectMiddleware': 100,
+    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
     #'cnblogs.middlewares.ProxyMiddleware': 100,
 }
 
