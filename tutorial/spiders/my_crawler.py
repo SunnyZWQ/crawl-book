@@ -58,7 +58,7 @@ class doubanSpider(scrapy.Spider):
                             + bookstar + '    ' \
                             + '\n')
                 # booklist --> entry
-                yield scrapy.Request(next_page, callback=self.parse_entry)
+                yield scrapy.Request(booklink, callback=self.parse_entry)
         
             next_page = response.css('span.next a::attr(href)').extract()[0]
             if next_page is not None:
