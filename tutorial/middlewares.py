@@ -7,13 +7,13 @@
 
 from scrapy import signals
 
-import warnings
-from scrapy.exceptions import ScrapyDeprecationWarning
-warnings.warn("Module `scrapy.contrib.downloadermiddleware.redirect` is deprecated, "
-              "use `scrapy.downloadermiddlewares.redirect` instead",
-              ScrapyDeprecationWarning, stacklevel=2)
+# import warnings
+# from scrapy.exceptions import ScrapyDeprecationWarning
+# warnings.warn("Module `scrapy.contrib.downloadermiddleware.redirect` is deprecated, "
+#               "use `scrapy.downloadermiddlewares.redirect` instead",
+#               ScrapyDeprecationWarning, stacklevel=2)
 
-from scrapy.downloadermiddlewares.redirect import *
+# from scrapy.downloadermiddlewares.redirect import *
 
 
 class TutorialSpiderMiddleware(object):
@@ -55,7 +55,7 @@ class TutorialSpiderMiddleware(object):
         # Called with the start requests of the spider, and works
         # similarly to the process_spider_output() method, except
         # that it doesn’t have a response associated.
-
+        
         # Must return only requests (not items).
         for r in start_requests:
             yield r
